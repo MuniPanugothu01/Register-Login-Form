@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Form</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Times New Roman', Times, serif;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #010101;
+            position: relative;
+            display: flex;
+            justify-content: center;
+
+        }
+
+        div {
+            position: absolute;
+            height: 300px;
+            width: 600px;
+            background-color: #fff;
+            border-radius: 10px;
+            margin: auto;
+            padding: 90px;
+            top: 180px;
+        }
+
+        input {
+            padding: 10px;
+            margin-top: 18px;
+        }
+
+        #button {
+            /* margin-left:10px; */
+            margin-top: 20px;
+            margin-left: 100px;
+        
+        }
+        #button_forward{
+            margin-left: 10px;
+        }
+
+        a p {
+            margin-top: 30px;
+        }
+
+        h3 {
+            margin-top: -50px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div>
+        <h3 style="text-align: center;"><u>REGISTRAION FORM</u></h3>
+        <input type="text" id="user_name" placeholder="Enter user_Name">
+        <input type="password" id="password" placeholder="Enter the password">
+
+        <a href="#">
+            <p id="para">Please logIn if u have account</p>
+        </a>
+        <input type="button" id="button" value="Register">
+        <input type="button" id="button_forward" value="Forward">
+
+    </div>
+    <script>
+        // forward button
+        const btn_get_forward = document.getElementById("button_forward")
+        btn_get_forward.addEventListener("click", (event) => {
+            event.preventDefault()
+            window.history.forward()
+        })
+
+        // paragraph to go to login page
+        const para_get = document.getElementById("para");
+        para_get.addEventListener("click", (event) => {
+            window.location.assign("LoginForm.html")
+        })
+        const get_button = document.getElementById("button");
+
+        const emp_array = []
+
+        get_button.addEventListener("click", (event) => {
+            event.preventDefault();
+            // get input boxes
+            const input_user = document.getElementById("user_name");
+            const input_password = document.getElementById("password");
+
+            console.log(input_user.value, input_password.value);
+            if (input_user.value === "" || input_password.value === "") {
+                alert("Please enter the valid text!")
+            }
+
+            else {
+                // create the object
+                const object = {
+                    User_Name: input_user.value,
+                    User_Password: input_password.value
+                };
+
+
+                console.log(object);
+                emp_array.push(object);
+                console.log(emp_array);
+                // Store the updated array in localStorage
+                localStorage.setItem("register", JSON.stringify(emp_array))
+
+                input_user.value = "";
+                input_password.value = "";
+                // Confirm successful registration
+                const a = confirm("Register succesfully, if u want to go Login, press ok")
+                if (a) {
+                    window.location.assign("LoginForm.html")
+                }
+                else {
+                    alert("please go back!")
+                }
+
+
+                // create the button go to forward history
+
+                const btn_forward_cre = document.createElement("button");
+                btn_forward_cre.innerHTML = "Forward";
+
+                btn_forward_cre.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    window.history.forward()
+                });
+                document.body.append(btn_forward_cre);
+
+            }
+
+        })
+    </script>
+
+</body>
+
+</html>
